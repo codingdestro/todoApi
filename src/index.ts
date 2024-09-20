@@ -1,18 +1,9 @@
 import { serve } from "bun";
 import { Hono } from "hono";
+import { db } from "./db";
+import { users } from "./db/schema";
 
 const app = new Hono()
-
-app.get("/", (c) => c.text("welcome to the codingdestro todo api"))
-app.get("/test", (c) => c.json({
-  "demo-todos":
-    [
-      "write a book",
-      "create a paper boat",
-      "solve mathematics"
-    ]
-
-}))
 
 serve({
   fetch: app.fetch,
