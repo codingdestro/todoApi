@@ -12,6 +12,7 @@
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
     "@types/bun": "latest",
+    "@types/jsonwebtoken": "^9.0.7",
     "@types/node": "^22.5.5",
     "@typescript-eslint/eslint-plugin": "^8.6.0",
     "@typescript-eslint/parser": "^8.6.0",

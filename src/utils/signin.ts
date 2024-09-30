@@ -3,6 +3,8 @@ import bcrypt from "bcrypt";
 import { users } from "../db/schema";
 import { eq } from "drizzle-orm";
 import { User } from "../types";
+import { throws } from "assert";
+import { getJWTToken } from "./authorization";
 
 export const signInUser = async (user: User) => {
   //create user password hash
@@ -12,17 +14,26 @@ export const signInUser = async (user: User) => {
   await addUser(user);
 };
 
+export const loginUser = async (user: User) => {
+  const _user = await isUserAlreadyExists(user);
+  if (!_user || !_user[0].password) {
+    throw "user does not exists";
+    return;
+  }
+  const match = await bcrypt.compare(user.password, _user[0].password);
+  if (!match) throw "password does not match!";
+};
 export const isUserAlreadyExists = async (user: User) => {
   const _user = await db
     .select()
     .from(users)
     .where(eq(users.email, user.email));
   if (_user.length == 0) return false;
-  else return true;
+  else return _user;
 };
 
 export const addUser = async (user: User) => {
-  if (await isUserAlreadyExists(user)) throw "user alread exists";
+  if (!(await isUserAlreadyExists(user))) throw "user alread exists";
 
   const usr = await db
     .insert(users)
