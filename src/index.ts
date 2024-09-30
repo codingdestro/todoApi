@@ -4,10 +4,13 @@ import { db } from "./db";
 import { users } from "./db/schema";
 
 import route from "./routes";
+import todosRoute from "./routes/todos";
 
 const app = new Hono();
 
 app.route("/", route);
+app.route("/todos", todosRoute);
+
 serve({
   fetch: app.fetch,
   port: 3000,
