@@ -4,12 +4,12 @@ import { db } from "./db";
 import { users } from "./db/schema";
 
 import route from "./routes";
-import todosRoute from "./routes/todos";
+import login from "./routes/accounts";
 
 const app = new Hono();
 
 app.route("/", route);
-app.route("/todos", todosRoute);
+app.route("/account", login);
 
 serve({
   fetch: app.fetch,
