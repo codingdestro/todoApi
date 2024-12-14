@@ -18,7 +18,10 @@ export const validatedUser = async (c: Context, next: Next) => {
     if (err instanceof z.ZodError) {
       return c.json({ errors: err.errors }, 400);
     }
-    return c.json({ erros: "failed to valiedate the user credentials" }, 422);
+    return c.json(
+      { erros: "failed to valiedate the user credentials" },
+      422
+    );
   }
 };
 

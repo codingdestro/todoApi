@@ -12,8 +12,8 @@ app.route("/", route);
 app.route("/account", login);
 
 serve({
-  fetch: app.fetch,
-  port: 3000,
+        fetch: app.fetch,
+        port: 3000,
 });
 
 console.log(`Server is running http://localhost:3000/`);
