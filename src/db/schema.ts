@@ -2,25 +2,28 @@ import { text, sqliteTable } from "drizzle-orm/sqlite-core";
 import { title } from "process";
 import { v4 as uuid } from "uuid";
 export const users = sqliteTable("users", {
-        id: text("id").$defaultFn(() => uuid()),
-        username: text("username", { length: 20 }),
-        email: text("email"),
-        password: text("password"),
+        id: text("id")
+                .$defaultFn(() => uuid())
+                .notNull(),
+        username: text("username", { length: 20 }).notNull(),
+        email: text("email").notNull(),
+        password: text("password").notNull(),
 });
 
 export const todos = sqliteTable("todos", {
         id: text("id")
                 .$defaultFn(() => uuid())
-                .primaryKey(),
-        userId: text("user_id"),
-        todo: text("todo"),
+                .primaryKey()
+                .notNull(),
+        userId: text("user_id").notNull(),
+        todo: text("todo").notNull(),
         completed: text("completed").default("false").notNull(),
-        createdAt: text("created_at").$defaultFn(() =>
-                new Date().toISOString()
-        ),
-        updatedAt: text("created_at").$defaultFn(() =>
-                new Date().toISOString()
-        ),
+        createdAt: text("created_at")
+                .$defaultFn(() => new Date().toISOString())
+                .notNull(),
+        updatedAt: text("created_at")
+                .$defaultFn(() => new Date().toISOString())
+                .notNull(),
 });
 
 export const groups = sqliteTable("groups", {

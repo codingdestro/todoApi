@@ -10,3 +10,12 @@ export const hashPassword = async (plainText: string) => {
                 throw "failed to hash the given password";
         }
 };
+
+export const isPasswordMatch = async (hashedPasswd: string, passwd: string) => {
+        try {
+                const isMatch = await bcrypt.compare(passwd, hashedPasswd);
+                return isMatch;
+        } catch {
+                return false;
+        }
+};
