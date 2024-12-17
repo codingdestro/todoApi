@@ -16,6 +16,7 @@ export const todos = sqliteTable("todos", {
                 .primaryKey()
                 .notNull(),
         userId: text("user_id").notNull(),
+        groupId: text("group_id").notNull(),
         todo: text("todo").notNull(),
         completed: text("completed").default("false").notNull(),
         createdAt: text("created_at")

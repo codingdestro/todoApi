@@ -1,5 +1,10 @@
-import jwt from "jsonwebtoken";
+import jwt, { JwtPayload } from "jsonwebtoken";
 import { User, UserToken } from "../types";
+
+export interface UserTokenT extends JwtPayload {
+        username: string;
+        userId: string;
+}
 const secret = "secret123";
 
 export const createAuthToken = async (username: string, userId: string) => {
@@ -20,7 +25,7 @@ export const createAuthToken = async (username: string, userId: string) => {
 
 export const verifyToken = async (token: string) => {
         try {
-                const user = await jwt.verify(token, secret);
+                const user = (await jwt.verify(token, secret)) as UserTokenT;
                 return user;
         } catch (err) {
                 if (err instanceof jwt.JsonWebTokenError) {

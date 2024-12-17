@@ -3,12 +3,14 @@ import { Hono } from "hono";
 import { db } from "./db";
 import { users } from "./db/schema";
 
-import route from "./routes";
 import login from "./routes/accounts";
+import todoGroups from "./routes/todoGroups";
+import todoRoutes from "./routes/todos";
 
 const app = new Hono();
 
-app.route("/", route);
+app.route("/todos/groups", todoGroups);
+app.route("/todos", todoRoutes);
 app.route("/account", login);
 
 serve({
