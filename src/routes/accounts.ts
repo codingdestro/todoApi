@@ -5,7 +5,7 @@ import {
         validatedUser,
 } from "../middlewares/userLogin";
 import { User } from "../types";
-import { createAuthToken } from "../utils/authToken";
+import { createAuthToken, UserTokenT, verifyToken } from "../utils/authToken";
 
 const route = new Hono();
 
@@ -23,6 +23,23 @@ route.post("/signin", async (c: Context) => {
         try {
                 const token = await createAuthToken(user.username!, userId);
                 return c.json({ token, msg: "user signed in in" });
+        } catch (err) {
+                return c.json({ errors: err }, 400);
+        }
+});
+
+route.post("/auth", async (c: Context) => {
+        try {
+                const authToken = c.req.header("Authorization");
+                if (!authToken) return c.json({ errros: "no token got" }, 400);
+                const verifiedUser: UserTokenT = (await verifyToken(
+                        authToken
+                )) as UserTokenT;
+                const freshToken = await createAuthToken(
+                        verifiedUser.username,
+                        verifiedUser.userId
+                );
+                return c.json({ msg: "Authenticated", token: freshToken });
         } catch (err) {
                 return c.json({ errors: err }, 400);
         }
