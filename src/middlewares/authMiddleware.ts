@@ -11,7 +11,6 @@ const authMiddleware = async (c: Context, next: Next) => {
                 const user = await verifyToken(token);
                 c.set("userId", user.userId);
         } catch (err) {
-                console.log(err);
                 c.json({ errors: "invailed or expire Authorization token" });
         }
 

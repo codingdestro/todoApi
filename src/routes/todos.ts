@@ -12,13 +12,11 @@ route.use("/add", authMiddleware, groupIdMiddleware);
 route.post("/add", async (c: Context) => {
         try {
                 const userId = c.get("userId");
-                const groupId = c.get("groupId");
                 const body = await c.req.json();
 
-                console.log(body, groupId);
                 await db.insert(todos).values({
                         userId: userId,
-                        groupId: groupId,
+                        groupId: body.groupId,
                         todo: body.todo,
                 });
 

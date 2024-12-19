@@ -12,14 +12,13 @@ const getGroupId = async (c: Context, next: Next) => {
                         .from(groups)
                         .where(
                                 and(
-                                        eq(groups.userId, userId),
-                                        eq(groups.name, body.name)
+                                        eq(groups.id, body.groupId),
+                                        eq(groups.userId, userId)
                                 )
                         );
 
                 if (grp.length <= 0)
                         return c.json({ msg: "There is no group found" });
-                console.log(grp[0].id);
                 c.set("groupId", grp[0].id);
                 await next();
         } catch {
